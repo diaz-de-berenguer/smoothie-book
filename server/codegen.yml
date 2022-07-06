@@ -1,0 +1,11 @@
+schema: ./src/schema.graphql
+hooks:
+  afterAllFileWrite:
+    - prettier --write
+generates:
+  ./src/graphql-types.ts:
+    config:
+      useIndexSignature: true
+    plugins:
+      - typescript
+      - typescript-resolvers
