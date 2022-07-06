@@ -2,7 +2,7 @@ import { ApolloServer } from "apollo-server";
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 
-const PORT = process.env.PORT || 4000; // Could be moved to ENV varible
+const PORT = process.env.PORT || 4000;
 const typeDefs = readFileSync(resolve(__dirname, './schema.graphql'), 'utf-8');
 const server = new ApolloServer({
   typeDefs,
