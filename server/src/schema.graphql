@@ -1,3 +1,36 @@
+type Smoothie {
+  id: ID!
+  name: String!
+  recipe: Recipe
+}
+
+type Recipe {
+  ingredients: [Ingredient]!
+  instructions: String
+}
+
+type Ingredient {
+  id: ID!
+  recipeId: ID!
+  name: String!
+  quantity: String!
+}
+
+input NewSmoothie {
+  name: String!
+  ingredients: [NewIngredient]!
+  instructions: String
+}
+
+input NewIngredient {
+  name: String!
+  quantity: String!
+}
+
 type Query {
-  test: String
+  getSmoothies(limit: Int, offset: Int): [Smoothie]!
+}
+
+type Mutation {
+  createSmoothie(input: NewSmoothie): Smoothie!
 }
