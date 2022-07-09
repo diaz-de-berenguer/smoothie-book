@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/smoothie-book/static/css/main.e6c13ad2.css",
-    "main.js": "/smoothie-book/static/js/main.5c30ca94.js",
+    "main.js": "/smoothie-book/static/js/main.41b7f7ff.js",
     "index.html": "/smoothie-book/index.html",
     "main.e6c13ad2.css.map": "/smoothie-book/static/css/main.e6c13ad2.css.map",
-    "main.5c30ca94.js.map": "/smoothie-book/static/js/main.5c30ca94.js.map"
+    "main.41b7f7ff.js.map": "/smoothie-book/static/js/main.41b7f7ff.js.map"
   },
   "entrypoints": [
     "static/css/main.e6c13ad2.css",
-    "static/js/main.5c30ca94.js"
+    "static/js/main.41b7f7ff.js"
   ]
 }
