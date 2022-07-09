@@ -1,0 +1,10 @@
+overwrite: true
+schema: 'https://smoothie-book-server.herokuapp.com/'
+documents: 'src/**/*.gql'
+generates:
+  src/graphql/schema.tsx:
+    plugins:
+      - 'typescript'
+      - 'typescript-operations'
+      - 'typescript-react-apollo'
+      - 'named-operations-object'
