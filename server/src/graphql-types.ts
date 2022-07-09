@@ -24,6 +24,7 @@ export type Ingredient = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  clearData: Scalars['Boolean'];
   createSmoothie: Smoothie;
 };
 
@@ -202,6 +203,7 @@ export type MutationResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']
 > = ResolversObject<{
+  clearData?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   createSmoothie?: Resolver<
     ResolversTypes['Smoothie'],
     ParentType,

@@ -30,4 +30,16 @@ const db: DB = {
   },
 };
 
+export const clearData = () => {
+  db.tables = {
+    [Tables.smoothie]: [],
+    [Tables.ingredient]: [],
+    [Tables.recipe]: [],
+  };
+  db.indices = {
+    'smoothie-name': new Set<string>(),
+  };
+  return true;
+}
+
 export default db;
