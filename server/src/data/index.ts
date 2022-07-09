@@ -1,11 +1,11 @@
 // MOCK DATABASE
 
-import { Ingredient, Recipe, Smoothie } from "../graphql-types"
+import { Ingredient, Recipe, Smoothie } from '../graphql-types';
 
 export enum Tables {
   smoothie = 'smoothie',
   recipe = 'recipe',
-  ingredient = 'ingredient'
+  ingredient = 'ingredient',
 }
 
 interface DB {
@@ -13,21 +13,21 @@ interface DB {
     [Tables.smoothie]: Smoothie[];
     [Tables.ingredient]: Ingredient[];
     [Tables.recipe]: Recipe[];
-  },
+  };
   indices: {
     [index: string]: Set<string>;
-  }
+  };
 }
 
 const db: DB = {
   tables: {
     [Tables.smoothie]: [],
     [Tables.ingredient]: [],
-    [Tables.recipe]: []
+    [Tables.recipe]: [],
   },
   indices: {
     'smoothie-name': new Set<string>(),
-  }
-}
+  },
+};
 
 export default db;

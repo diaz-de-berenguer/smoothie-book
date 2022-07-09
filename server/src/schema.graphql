@@ -5,7 +5,9 @@ type Smoothie {
 }
 
 type Recipe {
-  ingredients: [Ingredient]!
+  id: ID!
+  smoothieId: ID!
+  ingredients: [Ingredient]
   instructions: String
 }
 
@@ -28,9 +30,10 @@ input NewIngredient {
 }
 
 type Query {
-  getSmoothies(limit: Int, offset: Int): [Smoothie]!
+  getSmoothies(limit: Int = 10, page: Int = 1): [Smoothie]!
+  getSmoothie(id: ID!): Smoothie
 }
 
 type Mutation {
-  createSmoothie(input: NewSmoothie): Smoothie!
+  createSmoothie(input: NewSmoothie!): Smoothie!
 }

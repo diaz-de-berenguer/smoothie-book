@@ -4,6 +4,7 @@ export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type RequireFields<T, K extends keyof T> = Omit<T, K> & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -27,7 +28,7 @@ export type Mutation = {
 };
 
 export type MutationCreateSmoothieArgs = {
-  input?: InputMaybe<NewSmoothie>;
+  input: NewSmoothie;
 };
 
 export type NewIngredient = {
@@ -43,18 +44,25 @@ export type NewSmoothie = {
 
 export type Query = {
   __typename?: 'Query';
+  getSmoothie?: Maybe<Smoothie>;
   getSmoothies: Array<Maybe<Smoothie>>;
+};
+
+export type QueryGetSmoothieArgs = {
+  id: Scalars['ID'];
 };
 
 export type QueryGetSmoothiesArgs = {
   limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  page?: InputMaybe<Scalars['Int']>;
 };
 
 export type Recipe = {
   __typename?: 'Recipe';
-  ingredients: Array<Maybe<Ingredient>>;
+  id: Scalars['ID'];
+  ingredients?: Maybe<Array<Maybe<Ingredient>>>;
   instructions?: Maybe<Scalars['String']>;
+  smoothieId: Scalars['ID'];
 };
 
 export type Smoothie = {
@@ -198,7 +206,7 @@ export type MutationResolvers<
     ResolversTypes['Smoothie'],
     ParentType,
     ContextType,
-    Partial<MutationCreateSmoothieArgs>
+    RequireFields<MutationCreateSmoothieArgs, 'input'>
   >;
 }>;
 
@@ -206,11 +214,17 @@ export type QueryResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']
 > = ResolversObject<{
+  getSmoothie?: Resolver<
+    Maybe<ResolversTypes['Smoothie']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryGetSmoothieArgs, 'id'>
+  >;
   getSmoothies?: Resolver<
     Array<Maybe<ResolversTypes['Smoothie']>>,
     ParentType,
     ContextType,
-    Partial<QueryGetSmoothiesArgs>
+    RequireFields<QueryGetSmoothiesArgs, 'limit' | 'page'>
   >;
 }>;
 
@@ -218,8 +232,14 @@ export type RecipeResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['Recipe'] = ResolversParentTypes['Recipe']
 > = ResolversObject<{
-  ingredients?: Resolver<Array<Maybe<ResolversTypes['Ingredient']>>, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  ingredients?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['Ingredient']>>>,
+    ParentType,
+    ContextType
+  >;
   instructions?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  smoothieId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
