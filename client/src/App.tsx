@@ -1,8 +1,10 @@
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 
 import AddTestDataButton from './components/ResetDataButton';
+import Page from './components/Page';
+import Router from './Router';
 
-const SERVER_URL = 'https://smoothie-book-server.herokuapp.com/';
+const SERVER_URL = process.env.SERVER_URL || 'http://localhost:4000/';
 
 const client = new ApolloClient({
   uri: SERVER_URL,
@@ -12,10 +14,11 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
-      <header className="App-header">
+      <Page>
         <h1>Heeeellooo</h1>
         <AddTestDataButton />
-      </header>
+        <Router />
+      </Page>
     </ApolloProvider>
   );
 }

@@ -13,7 +13,7 @@ import { v4 } from 'uuid';
 
 function assertUniqueName(name: string) {
   if (db.indices['smoothie-name'].has(name)) {
-    throw new Error('Invalid name, already exists');
+    throw new Error(`Invalid name, ${name} already exists`);
   }
 }
 
