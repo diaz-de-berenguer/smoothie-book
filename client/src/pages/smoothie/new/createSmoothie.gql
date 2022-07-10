@@ -1,0 +1,6 @@
+mutation CreateSmoothie($input: NewSmoothie!) {
+  createSmoothie(input: $input) {
+    id
+    name
+  }
+}

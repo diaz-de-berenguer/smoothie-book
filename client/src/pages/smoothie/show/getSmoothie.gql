@@ -1,0 +1,15 @@
+query GetSmoothie($getSmoothieId: ID!) {
+  getSmoothie(id: $getSmoothieId) {
+    id
+    name
+    recipe {
+      id
+      instructions
+      ingredients {
+        id
+        name
+        quantity
+      }
+    }
+  }
+}

@@ -1,5 +1,5 @@
 overwrite: true
-schema: 'https://smoothie-book-server.herokuapp.com/'
+schema: 'http://localhost:4000'
 documents: 'src/**/*.gql'
 generates:
   src/graphql/schema.tsx:

@@ -87,6 +87,49 @@ export type ResetDataMutation = {
   createSmoothie: { __typename?: 'Smoothie'; id: string };
 };
 
+export type GetSmoothiesQueryVariables = Exact<{
+  limit?: InputMaybe<Scalars['Int']>;
+  page?: InputMaybe<Scalars['Int']>;
+}>;
+
+export type GetSmoothiesQuery = {
+  __typename?: 'Query';
+  getSmoothies: Array<{ __typename?: 'Smoothie'; id: string; name: string } | null>;
+};
+
+export type CreateSmoothieMutationVariables = Exact<{
+  input: NewSmoothie;
+}>;
+
+export type CreateSmoothieMutation = {
+  __typename?: 'Mutation';
+  createSmoothie: { __typename?: 'Smoothie'; id: string; name: string };
+};
+
+export type GetSmoothieQueryVariables = Exact<{
+  getSmoothieId: Scalars['ID'];
+}>;
+
+export type GetSmoothieQuery = {
+  __typename?: 'Query';
+  getSmoothie?: {
+    __typename?: 'Smoothie';
+    id: string;
+    name: string;
+    recipe?: {
+      __typename?: 'Recipe';
+      id: string;
+      instructions?: string | null;
+      ingredients?: Array<{
+        __typename?: 'Ingredient';
+        id: string;
+        name: string;
+        quantity: string;
+      } | null> | null;
+    } | null;
+  } | null;
+};
+
 export const ClearDataDocument = gql`
   mutation ClearData {
     clearData
@@ -172,9 +215,164 @@ export type ResetDataMutationOptions = Apollo.BaseMutationOptions<
   ResetDataMutation,
   ResetDataMutationVariables
 >;
+export const GetSmoothiesDocument = gql`
+  query GetSmoothies($limit: Int, $page: Int) {
+    getSmoothies(limit: $limit, page: $page) {
+      id
+      name
+    }
+  }
+`;
+
+/**
+ * __useGetSmoothiesQuery__
+ *
+ * To run a query within a React component, call `useGetSmoothiesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSmoothiesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSmoothiesQuery({
+ *   variables: {
+ *      limit: // value for 'limit'
+ *      page: // value for 'page'
+ *   },
+ * });
+ */
+export function useGetSmoothiesQuery(
+  baseOptions?: Apollo.QueryHookOptions<GetSmoothiesQuery, GetSmoothiesQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetSmoothiesQuery, GetSmoothiesQueryVariables>(
+    GetSmoothiesDocument,
+    options
+  );
+}
+export function useGetSmoothiesLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<GetSmoothiesQuery, GetSmoothiesQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetSmoothiesQuery, GetSmoothiesQueryVariables>(
+    GetSmoothiesDocument,
+    options
+  );
+}
+export type GetSmoothiesQueryHookResult = ReturnType<typeof useGetSmoothiesQuery>;
+export type GetSmoothiesLazyQueryHookResult = ReturnType<typeof useGetSmoothiesLazyQuery>;
+export type GetSmoothiesQueryResult = Apollo.QueryResult<
+  GetSmoothiesQuery,
+  GetSmoothiesQueryVariables
+>;
+export const CreateSmoothieDocument = gql`
+  mutation CreateSmoothie($input: NewSmoothie!) {
+    createSmoothie(input: $input) {
+      id
+      name
+    }
+  }
+`;
+export type CreateSmoothieMutationFn = Apollo.MutationFunction<
+  CreateSmoothieMutation,
+  CreateSmoothieMutationVariables
+>;
+
+/**
+ * __useCreateSmoothieMutation__
+ *
+ * To run a mutation, you first call `useCreateSmoothieMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateSmoothieMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createSmoothieMutation, { data, loading, error }] = useCreateSmoothieMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateSmoothieMutation(
+  baseOptions?: Apollo.MutationHookOptions<CreateSmoothieMutation, CreateSmoothieMutationVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<CreateSmoothieMutation, CreateSmoothieMutationVariables>(
+    CreateSmoothieDocument,
+    options
+  );
+}
+export type CreateSmoothieMutationHookResult = ReturnType<typeof useCreateSmoothieMutation>;
+export type CreateSmoothieMutationResult = Apollo.MutationResult<CreateSmoothieMutation>;
+export type CreateSmoothieMutationOptions = Apollo.BaseMutationOptions<
+  CreateSmoothieMutation,
+  CreateSmoothieMutationVariables
+>;
+export const GetSmoothieDocument = gql`
+  query GetSmoothie($getSmoothieId: ID!) {
+    getSmoothie(id: $getSmoothieId) {
+      id
+      name
+      recipe {
+        id
+        instructions
+        ingredients {
+          id
+          name
+          quantity
+        }
+      }
+    }
+  }
+`;
+
+/**
+ * __useGetSmoothieQuery__
+ *
+ * To run a query within a React component, call `useGetSmoothieQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSmoothieQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSmoothieQuery({
+ *   variables: {
+ *      getSmoothieId: // value for 'getSmoothieId'
+ *   },
+ * });
+ */
+export function useGetSmoothieQuery(
+  baseOptions: Apollo.QueryHookOptions<GetSmoothieQuery, GetSmoothieQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetSmoothieQuery, GetSmoothieQueryVariables>(GetSmoothieDocument, options);
+}
+export function useGetSmoothieLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<GetSmoothieQuery, GetSmoothieQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetSmoothieQuery, GetSmoothieQueryVariables>(
+    GetSmoothieDocument,
+    options
+  );
+}
+export type GetSmoothieQueryHookResult = ReturnType<typeof useGetSmoothieQuery>;
+export type GetSmoothieLazyQueryHookResult = ReturnType<typeof useGetSmoothieLazyQuery>;
+export type GetSmoothieQueryResult = Apollo.QueryResult<
+  GetSmoothieQuery,
+  GetSmoothieQueryVariables
+>;
 export const namedOperations = {
+  Query: {
+    GetSmoothies: 'GetSmoothies',
+    GetSmoothie: 'GetSmoothie',
+  },
   Mutation: {
     ClearData: 'ClearData',
     ResetData: 'ResetData',
+    CreateSmoothie: 'CreateSmoothie',
   },
 };
