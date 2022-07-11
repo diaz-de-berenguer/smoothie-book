@@ -6,6 +6,7 @@ import {
   NewSmoothie,
   Recipe,
   Smoothie,
+  SmoothieConnection,
 } from '../graphql-types';
 import db, { Tables } from './index';
 
@@ -33,9 +34,12 @@ function parseIngredients(
   }, []);
 }
 
-export function getSmoothies(limit: number, page: number): Smoothie[] {
+export function getSmoothies(limit: number, page: number): SmoothieConnection {
   const smoothies = db.tables.smoothie;
-  return smoothies.slice((page - 1) * limit, page * limit);
+  return {
+    totalCount: smoothies.length,
+    nodes: smoothies.slice((page - 1) * limit, page * limit),
+  };
 }
 
 export function getSmoothie(_id: string): Maybe<Smoothie> {

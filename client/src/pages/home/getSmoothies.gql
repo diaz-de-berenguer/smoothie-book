@@ -1,6 +1,9 @@
 query GetSmoothies($limit: Int, $page: Int) {
   getSmoothies(limit: $limit, page: $page) {
-    id
-    name
+    totalCount
+    nodes {
+      id
+      name
+    }
   }
 }

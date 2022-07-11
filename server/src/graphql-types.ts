@@ -46,7 +46,7 @@ export type NewSmoothie = {
 export type Query = {
   __typename?: 'Query';
   getSmoothie?: Maybe<Smoothie>;
-  getSmoothies: Array<Maybe<Smoothie>>;
+  getSmoothies: SmoothieConnection;
 };
 
 export type QueryGetSmoothieArgs = {
@@ -71,6 +71,12 @@ export type Smoothie = {
   id: Scalars['ID'];
   name: Scalars['String'];
   recipe?: Maybe<Recipe>;
+};
+
+export type SmoothieConnection = {
+  __typename?: 'SmoothieConnection';
+  nodes?: Maybe<Array<Maybe<Smoothie>>>;
+  totalCount: Scalars['Int'];
 };
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
@@ -170,6 +176,7 @@ export type ResolversTypes = ResolversObject<{
   Query: ResolverTypeWrapper<{}>;
   Recipe: ResolverTypeWrapper<Recipe>;
   Smoothie: ResolverTypeWrapper<Smoothie>;
+  SmoothieConnection: ResolverTypeWrapper<SmoothieConnection>;
   String: ResolverTypeWrapper<Scalars['String']>;
 }>;
 
@@ -185,6 +192,7 @@ export type ResolversParentTypes = ResolversObject<{
   Query: {};
   Recipe: Recipe;
   Smoothie: Smoothie;
+  SmoothieConnection: SmoothieConnection;
   String: Scalars['String'];
 }>;
 
@@ -223,7 +231,7 @@ export type QueryResolvers<
     RequireFields<QueryGetSmoothieArgs, 'id'>
   >;
   getSmoothies?: Resolver<
-    Array<Maybe<ResolversTypes['Smoothie']>>,
+    ResolversTypes['SmoothieConnection'],
     ParentType,
     ContextType,
     RequireFields<QueryGetSmoothiesArgs, 'limit' | 'page'>
@@ -255,10 +263,20 @@ export type SmoothieResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
+export type SmoothieConnectionResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['SmoothieConnection'] = ResolversParentTypes['SmoothieConnection']
+> = ResolversObject<{
+  nodes?: Resolver<Maybe<Array<Maybe<ResolversTypes['Smoothie']>>>, ParentType, ContextType>;
+  totalCount?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export type Resolvers<ContextType = any> = ResolversObject<{
   Ingredient?: IngredientResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Recipe?: RecipeResolvers<ContextType>;
   Smoothie?: SmoothieResolvers<ContextType>;
+  SmoothieConnection?: SmoothieConnectionResolvers<ContextType>;
 }>;

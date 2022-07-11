@@ -13,7 +13,7 @@ const getTestData = (): Array<NewSmoothie> => {
       instructions: 'Add all ingredients to a high powered blender and blend until smooth.',
     },
     {
-      name: 'Mango',
+      name: 'Mango Smoothie',
       ingredients: [
         { quantity: '2 cups', name: 'frozen mango' },
         { quantity: '1', name: 'small frozen banana' },

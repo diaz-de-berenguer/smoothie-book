@@ -30,11 +30,16 @@ input NewIngredient {
 }
 
 type Query {
-  getSmoothies(limit: Int = 10, page: Int = 1): [Smoothie]!
+  getSmoothies(limit: Int = 10, page: Int = 1): SmoothieConnection!
   getSmoothie(id: ID!): Smoothie
 }
 
 type Mutation {
   createSmoothie(input: NewSmoothie!): Smoothie!
   clearData: Boolean!
+}
+
+type SmoothieConnection {
+  totalCount: Int!
+  nodes: [Smoothie]
 }

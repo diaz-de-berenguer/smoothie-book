@@ -47,7 +47,7 @@ export type NewSmoothie = {
 export type Query = {
   __typename?: 'Query';
   getSmoothie?: Maybe<Smoothie>;
-  getSmoothies: Array<Maybe<Smoothie>>;
+  getSmoothies: SmoothieConnection;
 };
 
 export type QueryGetSmoothieArgs = {
@@ -74,6 +74,12 @@ export type Smoothie = {
   recipe?: Maybe<Recipe>;
 };
 
+export type SmoothieConnection = {
+  __typename?: 'SmoothieConnection';
+  nodes?: Maybe<Array<Maybe<Smoothie>>>;
+  totalCount: Scalars['Int'];
+};
+
 export type ClearDataMutationVariables = Exact<{ [key: string]: never }>;
 
 export type ClearDataMutation = { __typename?: 'Mutation'; clearData: boolean };
@@ -94,7 +100,11 @@ export type GetSmoothiesQueryVariables = Exact<{
 
 export type GetSmoothiesQuery = {
   __typename?: 'Query';
-  getSmoothies: Array<{ __typename?: 'Smoothie'; id: string; name: string } | null>;
+  getSmoothies: {
+    __typename?: 'SmoothieConnection';
+    totalCount: number;
+    nodes?: Array<{ __typename?: 'Smoothie'; id: string; name: string } | null> | null;
+  };
 };
 
 export type CreateSmoothieMutationVariables = Exact<{
@@ -218,8 +228,11 @@ export type ResetDataMutationOptions = Apollo.BaseMutationOptions<
 export const GetSmoothiesDocument = gql`
   query GetSmoothies($limit: Int, $page: Int) {
     getSmoothies(limit: $limit, page: $page) {
-      id
-      name
+      totalCount
+      nodes {
+        id
+        name
+      }
     }
   }
 `;

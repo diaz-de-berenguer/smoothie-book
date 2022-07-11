@@ -40,6 +40,6 @@ export const clearData = () => {
     'smoothie-name': new Set<string>(),
   };
   return true;
-}
+};
 
 export default db;

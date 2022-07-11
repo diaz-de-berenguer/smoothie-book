@@ -1,5 +1,5 @@
+import { Container, Grid, LinearProgress, Paper, Snackbar } from '@mui/material';
 import { Dispatch, SetStateAction, createContext, useState } from 'react';
-import { Grid, LinearProgress, Paper, Snackbar } from '@mui/material';
 
 import { ApolloError } from '@apollo/client';
 import { styled } from '@mui/system';
@@ -42,7 +42,9 @@ const Page: React.FC<PageProps> = ({ children }) => {
       <Grid container spacing={2} justifyContent="center">
         <Grid item xs={12} md={10} lg={7}>
           {loading && <Loading />}
-          <PagePaper elevation={2}>{children}</PagePaper>
+          <Container>
+            <PagePaper elevation={2}>{children}</PagePaper>
+          </Container>
         </Grid>
       </Grid>
       <Error

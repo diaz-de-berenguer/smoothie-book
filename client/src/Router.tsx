@@ -1,13 +1,21 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
+import Header from './components/Header';
+import Home from './pages/home';
+import Page from './components/Page';
+import ShowSmoothie from './pages/smoothie/show';
+
 const Router: React.FC = () => {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/smoothie/new" element={<h2>New Smothie</h2>} />
-        <Route path="/smoothie/:id" element={<h2>Show Smoothie</h2>} />
-        <Route path="/" element={<h2>All Smoothies</h2>} />
-      </Routes>
+      <Header />
+      <Page>
+        <Routes>
+          <Route path="/smoothie/new" element={<h2>New Smothie</h2>} />
+          <Route path="/smoothie/:id" element={<ShowSmoothie/>} />
+          <Route path="/" element={<Home />} />
+        </Routes>
+      </Page>
     </BrowserRouter>
   );
 };
