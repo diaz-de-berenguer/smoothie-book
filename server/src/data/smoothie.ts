@@ -13,8 +13,30 @@ import db, { Tables } from './index';
 import { v4 } from 'uuid';
 
 function assertUniqueName(name: string) {
-  if (db.indices['smoothie-name'].has(name)) {
+  if (db.indices['smoothie-name'].has(name.toLowerCase())) {
     throw new Error(`Invalid name, ${name} already exists`);
+  }
+}
+
+function assertNotEmpty({ name, ingredients }: NewSmoothie) {
+  const errors: Array<string> = [];
+  const blankIngredients =
+    ingredients.length === 0 ||
+    ingredients.some((i) => {
+      if (!i) {
+        return true;
+      }
+      const { name, quantity } = i;
+      return name.length === 0 || quantity.length === 0;
+    });
+  if (name.length === 0) {
+    errors.push(`Name can't be blank`);
+  }
+  if (blankIngredients) {
+    errors.push(`Ingredients can't be blank`);
+  }
+  if (errors.length > 0) {
+    throw new Error(`Invalid input: ${errors.join(', ')}`);
   }
 }
 
@@ -49,13 +71,14 @@ export function getSmoothie(_id: string): Maybe<Smoothie> {
 
 export function insertSmoothie({ name, ingredients, instructions }: NewSmoothie): Smoothie {
   assertUniqueName(name);
+  assertNotEmpty({ name, instructions, ingredients });
   const id = v4();
   const smoothie: Smoothie = {
     id,
     name,
   };
-  db.tables[Tables.smoothie].push(smoothie);
-  db.indices['smoothie-name'].add(name);
+  db.tables[Tables.smoothie].unshift(smoothie);
+  db.indices['smoothie-name'].add(name.toLowerCase());
   const recipeId = v4();
   const recipe: Recipe = {
     id: recipeId,

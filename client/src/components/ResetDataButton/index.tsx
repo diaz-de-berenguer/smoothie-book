@@ -22,7 +22,8 @@ const ResetDataButton: React.FC = () => {
 
   const [submit, { loading }] = useResetDataMutation({
     onError: (err) => setError(err),
-    refetchQueries: [{ query: GetSmoothiesDocument, variables: { page: 1 } }],
+    awaitRefetchQueries: true,
+    refetchQueries: [{ query: GetSmoothiesDocument, variables: { page: 1, limit: 8 } }],
   });
 
   function handleSubmit() {
