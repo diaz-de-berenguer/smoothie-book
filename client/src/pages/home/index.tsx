@@ -50,7 +50,7 @@ const NewSmoothieButton: React.FC = () => {
 };
 
 const Home: React.FC<HomeProps> = () => {
-  const pageSize = 5;
+  const pageSize = 8;
   const [smoothies, setSmoothies] = useState<GetSmoothiesQuery['getSmoothies']['nodes']>();
   const [pageCount, setPageCount] = useState<number>(1);
   const [page, setPage] = useState<number>(1);
@@ -87,7 +87,7 @@ const Home: React.FC<HomeProps> = () => {
       </Spacer>
       <Box
         sx={{
-          minHeight: '22rem',
+          minHeight: `${pageSize * 4 + 2}rem`,
           width: '100%',
         }}
       >
