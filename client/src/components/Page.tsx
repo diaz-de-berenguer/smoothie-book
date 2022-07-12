@@ -50,6 +50,8 @@ const Page: React.FC<PageProps> = ({ children }) => {
       <Error
         open={Boolean(error)}
         message={error?.message}
+        autoHideDuration={4000}
+        onClose={() => setError(null)}
         anchorOrigin={{
           horizontal: 'right',
           vertical: 'top',
