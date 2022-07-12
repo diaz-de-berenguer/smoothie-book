@@ -26,6 +26,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   addRating: Smoothie;
   createSmoothie: Smoothie;
+  deleteSmoothie: Smoothie;
   resetData: Scalars['Boolean'];
 };
 
@@ -36,6 +37,10 @@ export type MutationAddRatingArgs = {
 
 export type MutationCreateSmoothieArgs = {
   input: NewSmoothie;
+};
+
+export type MutationDeleteSmoothieArgs = {
+  smoothieId: Scalars['ID'];
 };
 
 export type NewIngredient = {
@@ -237,6 +242,12 @@ export type MutationResolvers<
     ParentType,
     ContextType,
     RequireFields<MutationCreateSmoothieArgs, 'input'>
+  >;
+  deleteSmoothie?: Resolver<
+    ResolversTypes['Smoothie'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationDeleteSmoothieArgs, 'smoothieId'>
   >;
   resetData?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
 }>;

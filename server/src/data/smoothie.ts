@@ -116,3 +116,17 @@ export function getRating(smoothieId: string): Rating {
     count,
   };
 }
+
+export function deleteSmoothie(smoothieId: string): Smoothie {
+  const index = db.tables.smoothie.findIndex(({ id }) => id === smoothieId);
+  const smoothie = db.tables.smoothie[index];
+  if (!smoothie) {
+    throw new Error(`Unable to find smoothie for given id: ${smoothieId}`);
+  }
+  if (!db.tables.ratings.has(smoothieId)) {
+    db.tables.ratings.delete(smoothieId);
+  }
+  db.indices['smoothie-name'].delete(smoothie.name);
+  db.tables.smoothie.splice(index, 1);
+  return smoothie;
+}

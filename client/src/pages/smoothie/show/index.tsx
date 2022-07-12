@@ -15,6 +15,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { PageContext } from '../../../components/Page';
 import Rating from '../../../components/Rating';
+import SmoothieMenu from '../../../components/SmoothieMenu';
 import { styled } from '@mui/system';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router';
@@ -49,15 +50,22 @@ const ShowSmoothie: React.FC<ShowSmoothieProps> = () => {
             paddingBottom: '3rem',
           }}
         >
-          <Grid container direction={['column-reverse', 'row']}>
-            <Grid item sm={6} xs={12}>
+          <Grid container>
+            <Grid item xs={12} style={{ paddingBottom: '1rem' }}>
+              <Button variant="text" onClick={() => navigate('/')}>
+                <Typography variant="caption">
+                  <ArrowBackIosIcon sx={{ fontSize: '0.5rem' }} />
+                  All Smoothies
+                </Typography>
+              </Button>
+            </Grid>
+          </Grid>
+          <Grid container>
+            <Grid item sm={6} xs={10}>
               <Typography variant="h4">{smoothie?.name}</Typography>
             </Grid>
-            <Grid item sm={6} xs={12} style={{ textAlign: 'right', paddingTop: '1rem' }}>
-              <Button variant="text" onClick={() => navigate('/')}>
-                <ArrowBackIosIcon fontSize="small" />
-                All Smoothies
-              </Button>
+            <Grid item sm={6} xs={2} style={{ textAlign: 'right', padding: '0.5rem 0' }}>
+              <SmoothieMenu smoothieId={id} />
             </Grid>
           </Grid>
 

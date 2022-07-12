@@ -1,0 +1,5 @@
+mutation DeleteSmoothie($smoothieId: ID!) {
+  deleteSmoothie(smoothieId: $smoothieId) {
+    id
+  }
+}

@@ -27,6 +27,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   addRating: Smoothie;
   createSmoothie: Smoothie;
+  deleteSmoothie: Smoothie;
   resetData: Scalars['Boolean'];
 };
 
@@ -37,6 +38,10 @@ export type MutationAddRatingArgs = {
 
 export type MutationCreateSmoothieArgs = {
   input: NewSmoothie;
+};
+
+export type MutationDeleteSmoothieArgs = {
+  smoothieId: Scalars['ID'];
 };
 
 export type NewIngredient = {
@@ -91,6 +96,15 @@ export type SmoothieConnection = {
   __typename?: 'SmoothieConnection';
   nodes?: Maybe<Array<Maybe<Smoothie>>>;
   totalCount: Scalars['Int'];
+};
+
+export type DeleteSmoothieMutationVariables = Exact<{
+  smoothieId: Scalars['ID'];
+}>;
+
+export type DeleteSmoothieMutation = {
+  __typename?: 'Mutation';
+  deleteSmoothie: { __typename?: 'Smoothie'; id: string };
 };
 
 export type AddRatingMutationVariables = Exact<{
@@ -160,6 +174,50 @@ export type GetSmoothieQuery = {
   } | null;
 };
 
+export const DeleteSmoothieDocument = gql`
+  mutation DeleteSmoothie($smoothieId: ID!) {
+    deleteSmoothie(smoothieId: $smoothieId) {
+      id
+    }
+  }
+`;
+export type DeleteSmoothieMutationFn = Apollo.MutationFunction<
+  DeleteSmoothieMutation,
+  DeleteSmoothieMutationVariables
+>;
+
+/**
+ * __useDeleteSmoothieMutation__
+ *
+ * To run a mutation, you first call `useDeleteSmoothieMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteSmoothieMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteSmoothieMutation, { data, loading, error }] = useDeleteSmoothieMutation({
+ *   variables: {
+ *      smoothieId: // value for 'smoothieId'
+ *   },
+ * });
+ */
+export function useDeleteSmoothieMutation(
+  baseOptions?: Apollo.MutationHookOptions<DeleteSmoothieMutation, DeleteSmoothieMutationVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<DeleteSmoothieMutation, DeleteSmoothieMutationVariables>(
+    DeleteSmoothieDocument,
+    options
+  );
+}
+export type DeleteSmoothieMutationHookResult = ReturnType<typeof useDeleteSmoothieMutation>;
+export type DeleteSmoothieMutationResult = Apollo.MutationResult<DeleteSmoothieMutation>;
+export type DeleteSmoothieMutationOptions = Apollo.BaseMutationOptions<
+  DeleteSmoothieMutation,
+  DeleteSmoothieMutationVariables
+>;
 export const AddRatingDocument = gql`
   mutation AddRating($smoothieId: ID!, $value: Int!) {
     addRating(smoothieId: $smoothieId, value: $value) {
@@ -413,6 +471,7 @@ export const namedOperations = {
     GetSmoothie: 'GetSmoothie',
   },
   Mutation: {
+    DeleteSmoothie: 'DeleteSmoothie',
     AddRating: 'AddRating',
     ResetData: 'ResetData',
     CreateSmoothie: 'CreateSmoothie',
