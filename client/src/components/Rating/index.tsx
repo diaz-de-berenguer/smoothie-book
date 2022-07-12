@@ -114,7 +114,12 @@ const CurrentRating: React.FC<{ value: number }> = ({ value }) => {
   return <>{stars}</>;
 };
 
-const Rating: React.FC<RatingProps> = ({ smoothieId, value, count, shouldUpdateRating: updateRating }) => {
+const Rating: React.FC<RatingProps> = ({
+  smoothieId,
+  value,
+  count,
+  shouldUpdateRating: updateRating,
+}) => {
   const [isHovering, setIsHovering] = useState(false);
 
   const [submitRating, { loading, called }] = useAddRatingMutation({
@@ -154,7 +159,9 @@ const Rating: React.FC<RatingProps> = ({ smoothieId, value, count, shouldUpdateR
       </Grid>
       <Grid item md={6} sm={5} xs={4}>
         <Typography variant="caption">
-          {shouldShowUpdateRating ? 'Rate' : `${called ? 'Thanks! ' : ''}(${String(count)} Ratings)`}
+          {shouldShowUpdateRating
+            ? 'Rate'
+            : `${called ? 'Thanks! ' : ''}(${String(count)} Ratings)`}
         </Typography>
       </Grid>
     </Grid>
