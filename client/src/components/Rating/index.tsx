@@ -10,7 +10,7 @@ import { useState } from 'react';
 interface RatingProps {
   value?: number | null;
   count: number;
-  updateRating?: boolean;
+  shouldUpdateRating?: boolean;
   smoothieId: string;
 }
 
@@ -25,14 +25,17 @@ const NoStar = styled(StarOutlineIcon)({
   color: 'lightgrey',
   fontSize: '1.2rem',
 });
+
 const EmptyStar = styled(StarOutlineIcon)({
   color: 'gold',
   fontSize: '1.2rem',
 });
+
 const HalfStar = styled(StarHalfIcon)({
   color: 'gold',
   fontSize: '1.2rem',
 });
+
 const Star = styled(StarIcon)({
   color: 'gold',
   fontSize: '1.2rem',
@@ -47,7 +50,7 @@ const UpdateRating: React.FC<UpdateRatingProps> = ({
   const stars: Array<React.ReactNode> = [];
   const [rating, setRating] = useState(0);
 
-  const handleClick = (i: number) => {
+  const handleClick = () => {
     if (!loading || !called) {
       submitRating({
         variables: {
@@ -61,7 +64,7 @@ const UpdateRating: React.FC<UpdateRatingProps> = ({
   for (let i = 1; i <= 5; i++) {
     stars.push(
       <Grid item xs={2} onMouseOver={() => setRating(i)} onMouseLeave={() => setRating(0)}>
-        <Box sx={{ cursor: called ? 'inherit' : 'pointer' }} onClick={() => handleClick(i)}>
+        <Box sx={{ cursor: called ? 'inherit' : 'pointer' }} onClick={handleClick}>
           {rating >= i ? <Star /> : <NoStar />}
         </Box>
       </Grid>
@@ -86,7 +89,6 @@ const CurrentRating: React.FC<{ value: number }> = ({ value }) => {
   const stars = [];
   for (let i = 0; i < 5; i++) {
     const diff = value - i;
-    console.log(diff);
     if (diff >= 1) {
       stars.push(
         <Grid item xs={2}>
@@ -112,7 +114,7 @@ const CurrentRating: React.FC<{ value: number }> = ({ value }) => {
   return <>{stars}</>;
 };
 
-const Rating: React.FC<RatingProps> = ({ smoothieId, value, count, updateRating }) => {
+const Rating: React.FC<RatingProps> = ({ smoothieId, value, count, shouldUpdateRating: updateRating }) => {
   const [isHovering, setIsHovering] = useState(false);
 
   const [submitRating, { loading, called }] = useAddRatingMutation({
@@ -134,7 +136,7 @@ const Rating: React.FC<RatingProps> = ({ smoothieId, value, count, updateRating 
 
   return (
     <Grid container onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
-      <Grid item md={6} sm={8} xs={10}>
+      <Grid item md={6} sm={7} xs={8}>
         <Grid container columns={10}>
           {shouldShowUpdateRating ? (
             <UpdateRating
@@ -150,9 +152,9 @@ const Rating: React.FC<RatingProps> = ({ smoothieId, value, count, updateRating 
           )}
         </Grid>
       </Grid>
-      <Grid item md={6} sm={4} xs={2}>
+      <Grid item md={6} sm={5} xs={4}>
         <Typography variant="caption">
-          {shouldShowUpdateRating ? 'Rate' : `${called ? 'Thanks! ' : ''}(${String(count)})`}
+          {shouldShowUpdateRating ? 'Rate' : `${called ? 'Thanks! ' : ''}(${String(count)} Ratings)`}
         </Typography>
       </Grid>
     </Grid>

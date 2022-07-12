@@ -96,12 +96,12 @@ const Home: React.FC<HomeProps> = () => {
             return (
               smoothie && (
                 <Grid container key={smoothie.id}>
-                  <Item item xs={8}>
+                  <Item item sm={8} xs={12}>
                     <SmoothieLink to={`smoothie/${smoothie.id}`}>
                       <SmoothieName variant="h5">{smoothie.name}</SmoothieName>
                     </SmoothieLink>
                   </Item>
-                  <Item item xs={4}>
+                  <Item item sm={4} xs={6}>
                     <Rating
                       count={smoothie.rating?.count || 0}
                       value={smoothie.rating?.value}

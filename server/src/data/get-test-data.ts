@@ -2,7 +2,7 @@ import { NewSmoothie } from '../graphql-types';
 
 const randomRatings = (): Array<number> => {
   const ratings = [];
-  const count = Math.floor(Math.random() * 5);
+  const count = Math.floor(Math.random() * 50);
   for (let i = 0; i < count; i++) {
     const rating = Math.ceil(Math.random() * 5) + 5;
     ratings.push(rating);

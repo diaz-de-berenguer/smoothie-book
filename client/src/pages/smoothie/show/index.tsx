@@ -62,11 +62,11 @@ const ShowSmoothie: React.FC<ShowSmoothieProps> = () => {
           </Grid>
 
           <Grid container>
-            <Grid item md={4} xs={6}>
+            <Grid item lg={4} md={3} sm={4} xs={7}>
               <Box sx={{ paddingTop: '1rem' }}>
                 <Rating
                   smoothieId={id}
-                  updateRating
+                  shouldUpdateRating
                   value={smoothie.rating?.value}
                   count={smoothie.rating?.count || 0}
                 />
