@@ -24,8 +24,14 @@ export type Ingredient = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  clearData: Scalars['Boolean'];
+  addRating: Smoothie;
   createSmoothie: Smoothie;
+  resetData: Scalars['Boolean'];
+};
+
+export type MutationAddRatingArgs = {
+  smoothieId: Scalars['ID'];
+  value: Scalars['Int'];
 };
 
 export type MutationCreateSmoothieArgs = {
@@ -58,6 +64,12 @@ export type QueryGetSmoothiesArgs = {
   page?: InputMaybe<Scalars['Int']>;
 };
 
+export type Rating = {
+  __typename?: 'Rating';
+  count: Scalars['Int'];
+  value?: Maybe<Scalars['Int']>;
+};
+
 export type Recipe = {
   __typename?: 'Recipe';
   id: Scalars['ID'];
@@ -70,6 +82,7 @@ export type Smoothie = {
   __typename?: 'Smoothie';
   id: Scalars['ID'];
   name: Scalars['String'];
+  rating?: Maybe<Rating>;
   recipe?: Maybe<Recipe>;
 };
 
@@ -174,6 +187,7 @@ export type ResolversTypes = ResolversObject<{
   NewIngredient: NewIngredient;
   NewSmoothie: NewSmoothie;
   Query: ResolverTypeWrapper<{}>;
+  Rating: ResolverTypeWrapper<Rating>;
   Recipe: ResolverTypeWrapper<Recipe>;
   Smoothie: ResolverTypeWrapper<Smoothie>;
   SmoothieConnection: ResolverTypeWrapper<SmoothieConnection>;
@@ -190,6 +204,7 @@ export type ResolversParentTypes = ResolversObject<{
   NewIngredient: NewIngredient;
   NewSmoothie: NewSmoothie;
   Query: {};
+  Rating: Rating;
   Recipe: Recipe;
   Smoothie: Smoothie;
   SmoothieConnection: SmoothieConnection;
@@ -211,13 +226,19 @@ export type MutationResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']
 > = ResolversObject<{
-  clearData?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  addRating?: Resolver<
+    ResolversTypes['Smoothie'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationAddRatingArgs, 'smoothieId' | 'value'>
+  >;
   createSmoothie?: Resolver<
     ResolversTypes['Smoothie'],
     ParentType,
     ContextType,
     RequireFields<MutationCreateSmoothieArgs, 'input'>
   >;
+  resetData?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
 }>;
 
 export type QueryResolvers<
@@ -236,6 +257,15 @@ export type QueryResolvers<
     ContextType,
     RequireFields<QueryGetSmoothiesArgs, 'limit' | 'page'>
   >;
+}>;
+
+export type RatingResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['Rating'] = ResolversParentTypes['Rating']
+> = ResolversObject<{
+  count?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  value?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type RecipeResolvers<
@@ -259,6 +289,7 @@ export type SmoothieResolvers<
 > = ResolversObject<{
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  rating?: Resolver<Maybe<ResolversTypes['Rating']>, ParentType, ContextType>;
   recipe?: Resolver<Maybe<ResolversTypes['Recipe']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
@@ -276,6 +307,7 @@ export type Resolvers<ContextType = any> = ResolversObject<{
   Ingredient?: IngredientResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
+  Rating?: RatingResolvers<ContextType>;
   Recipe?: RecipeResolvers<ContextType>;
   Smoothie?: SmoothieResolvers<ContextType>;
   SmoothieConnection?: SmoothieConnectionResolvers<ContextType>;

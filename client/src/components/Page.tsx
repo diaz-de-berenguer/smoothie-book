@@ -41,8 +41,8 @@ const Page: React.FC<PageProps> = ({ children }) => {
     <PageContext.Provider value={{ setLoading, setError }}>
       <Grid container spacing={2} justifyContent="center">
         <Grid item xs={12} md={10} lg={7}>
-          {loading && <Loading />}
           <Container>
+            {loading && <Loading />}
             <PagePaper elevation={2}>{children}</PagePaper>
           </Container>
         </Grid>

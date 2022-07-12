@@ -2,6 +2,12 @@ type Smoothie {
   id: ID!
   name: String!
   recipe: Recipe
+  rating: Rating
+}
+
+type Rating {
+  value: Int
+  count: Int!
 }
 
 type Recipe {
@@ -36,7 +42,8 @@ type Query {
 
 type Mutation {
   createSmoothie(input: NewSmoothie!): Smoothie!
-  clearData: Boolean!
+  addRating(smoothieId: ID!, value: Int!): Smoothie!
+  resetData: Boolean!
 }
 
 type SmoothieConnection {

@@ -1,6 +1,16 @@
-import { NewSmoothie } from '../../graphql/schema';
+import { NewSmoothie } from '../graphql-types';
 
-const getTestData = (): Array<NewSmoothie> => {
+const randomRatings = (): Array<number> => {
+  const ratings = [];
+  const count = Math.floor(Math.random() * 5);
+  for (let i = 0; i < count; i++) {
+    const rating = Math.ceil(Math.random() * 5) + 5;
+    ratings.push(rating);
+  }
+  return ratings;
+};
+
+const getTestData = (): Array<NewSmoothie & { ratings: Array<number> }> => {
   return [
     {
       name: 'Strawberry Banana Smoothie',
@@ -10,6 +20,7 @@ const getTestData = (): Array<NewSmoothie> => {
         { quantity: '1/2 cup', name: 'Greek yogurt' },
         { quantity: '1/2 cup', name: 'milk' },
       ],
+      ratings: randomRatings(),
       instructions: 'Add all ingredients to a high powered blender and blend until smooth.',
     },
     {
@@ -21,10 +32,12 @@ const getTestData = (): Array<NewSmoothie> => {
         { quantity: '1/2 cup', name: 'yogurt, dairy or dairy-free' },
       ],
       instructions: 'Add all ingredients to a high-powered blender and blend until creamy.',
+      ratings: randomRatings(),
     },
     {
       name: 'Mandarin Breakfast Smoothie',
       instructions: 'Add all of the ingredients to a high powered blender, and blend until smooth.',
+      ratings: randomRatings(),
       ingredients: [
         { quantity: '1 & 1/2 cups', name: 'milk, dairy or dairy-free' },
         { quantity: '1 cup', name: 'yogurt, dairy or dairy-free' },
@@ -37,6 +50,7 @@ const getTestData = (): Array<NewSmoothie> => {
     {
       name: 'Strawberry Acai Smoothie',
       instructions: 'Add all ingredients to a high-powered blender and blend until smooth.',
+      ratings: randomRatings(),
       ingredients: [
         { quantity: '3.5 oz packet', name: 'frozen acai' },
         { quantity: '1', name: 'banana' },
@@ -51,6 +65,7 @@ Add all ingredients except the chia seeds to a high-powered blender. Blend on hi
 
 Divide the peach smoothie between two Le Parfait jars or Mason jars. Add one tablespoon of chia seeds, add the lid and shake until well combined.
       `,
+      ratings: randomRatings(),
       ingredients: [
         { quantity: '3', name: 'peaches, pitted and quartered' },
         { quantity: '1 1/2 cups', name: 'milk, dairy or dairy-free' },
@@ -63,6 +78,7 @@ Divide the peach smoothie between two Le Parfait jars or Mason jars. Add one tab
     },
     {
       name: 'Almond Orange Smoothie',
+      ratings: randomRatings(),
       instructions:
         'Place all items in a high-powered blender and blend for 30 seconds. Serve immediately.',
       ingredients: [
@@ -76,6 +92,7 @@ Divide the peach smoothie between two Le Parfait jars or Mason jars. Add one tab
     },
     {
       name: 'Post Workout Green Smoothie',
+      ratings: randomRatings(),
       instructions:
         'Place all ingredients into a high powered blender. Blend for 30 seconds or until smooth.',
       ingredients: [
@@ -90,6 +107,7 @@ Divide the peach smoothie between two Le Parfait jars or Mason jars. Add one tab
       ],
     },
     {
+      ratings: randomRatings(),
       name: 'Blueberry Smoothie',
       instructions:
         'Blend coconut water, blueberries, banana, yogurt and flax seeds together in a high-powered blender for 30 seconds, or until creamy.',
@@ -102,6 +120,7 @@ Divide the peach smoothie between two Le Parfait jars or Mason jars. Add one tab
       ],
     },
     {
+      ratings: randomRatings(),
       name: 'Pinapple Timeric Smoothie',
       instructions:
         'Add all of the ingredients to a blender and blend for 30 seconds on high, or until creamy.',
@@ -117,6 +136,7 @@ Divide the peach smoothie between two Le Parfait jars or Mason jars. Add one tab
       ],
     },
     {
+      ratings: randomRatings(),
       name: 'Apple Carrot Beet Smoothie',
       instructions:
         'Place all ingredients in the pitcher of a high-powered blender, and blend until smooth, about 1-2 minutes. Use the tamper if needed.',
@@ -130,6 +150,7 @@ Divide the peach smoothie between two Le Parfait jars or Mason jars. Add one tab
       ],
     },
     {
+      ratings: randomRatings(),
       name: 'Persimmon smoothie',
       instructions: `
 Wash the persimmons and slice off the stem. Add them along with all other ingredients to a high-powered blender and blend for one minute.
@@ -145,6 +166,7 @@ Optionally, garnish the inside of a glass with a thin persimmon slice.
       ],
     },
     {
+      ratings: randomRatings(),
       name: 'Golden Beet Smoothie',
       instructions: `
 Add all ingredients into a high-powered blender and blend until smooth.

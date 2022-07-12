@@ -1,4 +1,4 @@
-import { Box, Button, Grid } from '@mui/material';
+import { Box, Button, Grid, Typography } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
 
@@ -6,8 +6,8 @@ import AddIcon from '@mui/icons-material/Add';
 import { GetSmoothiesQuery } from '../../graphql/schema';
 import { PageContext } from '../../components/Page';
 import Pagination from '@mui/material/Pagination';
+import Rating from '../../components/Rating';
 import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
 import { darken } from '@mui/material/styles';
 import { styled } from '@mui/system';
 import { useGetSmoothiesQuery } from '../../graphql/schema';
@@ -96,10 +96,17 @@ const Home: React.FC<HomeProps> = () => {
             return (
               smoothie && (
                 <Grid container key={smoothie.id}>
-                  <Item item xs={12} md={8}>
+                  <Item item xs={8}>
                     <SmoothieLink to={`smoothie/${smoothie.id}`}>
                       <SmoothieName variant="h5">{smoothie.name}</SmoothieName>
                     </SmoothieLink>
+                  </Item>
+                  <Item item xs={4}>
+                    <Rating
+                      count={smoothie.rating?.count || 0}
+                      value={smoothie.rating?.value}
+                      smoothieId={smoothie.id}
+                    />
                   </Item>
                 </Grid>
               )

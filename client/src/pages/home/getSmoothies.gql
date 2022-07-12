@@ -4,6 +4,10 @@ query GetSmoothies($limit: Int, $page: Int) {
     nodes {
       id
       name
+      rating {
+        count
+        value
+      }
     }
   }
 }

@@ -4,6 +4,7 @@ import {
   Maybe,
   NewIngredient,
   NewSmoothie,
+  Rating,
   Recipe,
   Smoothie,
   SmoothieConnection,
@@ -89,4 +90,29 @@ export function insertSmoothie({ name, ingredients, instructions }: NewSmoothie)
   db.tables[Tables.ingredient].push(...parseIngredients(ingredients, recipeId));
 
   return smoothie;
+}
+
+export function addRating(smoothieId: string, rating: number): Smoothie {
+  const smoothie = getSmoothie(smoothieId);
+  if (!smoothie) {
+    throw new Error(`Unable to find smoothie for given id: ${smoothieId}`);
+  }
+  if (!db.tables.ratings.has(smoothieId)) {
+    db.tables.ratings.set(smoothieId, []);
+  }
+  (db.tables.ratings.get(smoothieId) || []).push(rating);
+  return smoothie;
+}
+
+export function getRating(smoothieId: string): Rating {
+  const ratings = db.tables.ratings.get(smoothieId) || [];
+  const count = ratings.length;
+  let value;
+  if (count > 0) {
+    value = Math.ceil(ratings.reduce<number>((acc, val) => acc + val, 0) / count);
+  }
+  return {
+    value,
+    count,
+  };
 }

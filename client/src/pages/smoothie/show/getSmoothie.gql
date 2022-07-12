@@ -11,5 +11,9 @@ query GetSmoothie($getSmoothieId: ID!) {
         quantity
       }
     }
+    rating {
+      count
+      value
+    }
   }
 }

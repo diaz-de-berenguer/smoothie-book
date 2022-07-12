@@ -25,8 +25,14 @@ export type Ingredient = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  clearData: Scalars['Boolean'];
+  addRating: Smoothie;
   createSmoothie: Smoothie;
+  resetData: Scalars['Boolean'];
+};
+
+export type MutationAddRatingArgs = {
+  smoothieId: Scalars['ID'];
+  value: Scalars['Int'];
 };
 
 export type MutationCreateSmoothieArgs = {
@@ -59,6 +65,12 @@ export type QueryGetSmoothiesArgs = {
   page?: InputMaybe<Scalars['Int']>;
 };
 
+export type Rating = {
+  __typename?: 'Rating';
+  count: Scalars['Int'];
+  value?: Maybe<Scalars['Int']>;
+};
+
 export type Recipe = {
   __typename?: 'Recipe';
   id: Scalars['ID'];
@@ -71,6 +83,7 @@ export type Smoothie = {
   __typename?: 'Smoothie';
   id: Scalars['ID'];
   name: Scalars['String'];
+  rating?: Maybe<Rating>;
   recipe?: Maybe<Recipe>;
 };
 
@@ -80,18 +93,19 @@ export type SmoothieConnection = {
   totalCount: Scalars['Int'];
 };
 
-export type ClearDataMutationVariables = Exact<{ [key: string]: never }>;
-
-export type ClearDataMutation = { __typename?: 'Mutation'; clearData: boolean };
-
-export type ResetDataMutationVariables = Exact<{
-  input: NewSmoothie;
+export type AddRatingMutationVariables = Exact<{
+  smoothieId: Scalars['ID'];
+  value: Scalars['Int'];
 }>;
 
-export type ResetDataMutation = {
+export type AddRatingMutation = {
   __typename?: 'Mutation';
-  createSmoothie: { __typename?: 'Smoothie'; id: string };
+  addRating: { __typename?: 'Smoothie'; id: string };
 };
+
+export type ResetDataMutationVariables = Exact<{ [key: string]: never }>;
+
+export type ResetDataMutation = { __typename?: 'Mutation'; resetData: boolean };
 
 export type GetSmoothiesQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']>;
@@ -103,7 +117,12 @@ export type GetSmoothiesQuery = {
   getSmoothies: {
     __typename?: 'SmoothieConnection';
     totalCount: number;
-    nodes?: Array<{ __typename?: 'Smoothie'; id: string; name: string } | null> | null;
+    nodes?: Array<{
+      __typename?: 'Smoothie';
+      id: string;
+      name: string;
+      rating?: { __typename?: 'Rating'; count: number; value?: number | null } | null;
+    } | null> | null;
   };
 };
 
@@ -137,55 +156,58 @@ export type GetSmoothieQuery = {
         quantity: string;
       } | null> | null;
     } | null;
+    rating?: { __typename?: 'Rating'; count: number; value?: number | null } | null;
   } | null;
 };
 
-export const ClearDataDocument = gql`
-  mutation ClearData {
-    clearData
+export const AddRatingDocument = gql`
+  mutation AddRating($smoothieId: ID!, $value: Int!) {
+    addRating(smoothieId: $smoothieId, value: $value) {
+      id
+    }
   }
 `;
-export type ClearDataMutationFn = Apollo.MutationFunction<
-  ClearDataMutation,
-  ClearDataMutationVariables
+export type AddRatingMutationFn = Apollo.MutationFunction<
+  AddRatingMutation,
+  AddRatingMutationVariables
 >;
 
 /**
- * __useClearDataMutation__
+ * __useAddRatingMutation__
  *
- * To run a mutation, you first call `useClearDataMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useClearDataMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useAddRatingMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddRatingMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [clearDataMutation, { data, loading, error }] = useClearDataMutation({
+ * const [addRatingMutation, { data, loading, error }] = useAddRatingMutation({
  *   variables: {
+ *      smoothieId: // value for 'smoothieId'
+ *      value: // value for 'value'
  *   },
  * });
  */
-export function useClearDataMutation(
-  baseOptions?: Apollo.MutationHookOptions<ClearDataMutation, ClearDataMutationVariables>
+export function useAddRatingMutation(
+  baseOptions?: Apollo.MutationHookOptions<AddRatingMutation, AddRatingMutationVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<ClearDataMutation, ClearDataMutationVariables>(
-    ClearDataDocument,
+  return Apollo.useMutation<AddRatingMutation, AddRatingMutationVariables>(
+    AddRatingDocument,
     options
   );
 }
-export type ClearDataMutationHookResult = ReturnType<typeof useClearDataMutation>;
-export type ClearDataMutationResult = Apollo.MutationResult<ClearDataMutation>;
-export type ClearDataMutationOptions = Apollo.BaseMutationOptions<
-  ClearDataMutation,
-  ClearDataMutationVariables
+export type AddRatingMutationHookResult = ReturnType<typeof useAddRatingMutation>;
+export type AddRatingMutationResult = Apollo.MutationResult<AddRatingMutation>;
+export type AddRatingMutationOptions = Apollo.BaseMutationOptions<
+  AddRatingMutation,
+  AddRatingMutationVariables
 >;
 export const ResetDataDocument = gql`
-  mutation ResetData($input: NewSmoothie!) {
-    createSmoothie(input: $input) {
-      id
-    }
+  mutation ResetData {
+    resetData
   }
 `;
 export type ResetDataMutationFn = Apollo.MutationFunction<
@@ -206,7 +228,6 @@ export type ResetDataMutationFn = Apollo.MutationFunction<
  * @example
  * const [resetDataMutation, { data, loading, error }] = useResetDataMutation({
  *   variables: {
- *      input: // value for 'input'
  *   },
  * });
  */
@@ -232,6 +253,10 @@ export const GetSmoothiesDocument = gql`
       nodes {
         id
         name
+        rating {
+          count
+          value
+        }
       }
     }
   }
@@ -337,6 +362,10 @@ export const GetSmoothieDocument = gql`
           quantity
         }
       }
+      rating {
+        count
+        value
+      }
     }
   }
 `;
@@ -384,7 +413,7 @@ export const namedOperations = {
     GetSmoothie: 'GetSmoothie',
   },
   Mutation: {
-    ClearData: 'ClearData',
+    AddRating: 'AddRating',
     ResetData: 'ResetData',
     CreateSmoothie: 'CreateSmoothie',
   },

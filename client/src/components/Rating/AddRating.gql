@@ -1,0 +1,5 @@
+mutation AddRating($smoothieId: ID!, $value: Int!) {
+  addRating(smoothieId: $smoothieId, value: $value) {
+    id
+  }
+}

@@ -1,5 +1,3 @@
-mutation ResetData($input: NewSmoothie!) {
-  createSmoothie(input: $input) {
-    id
-  }
+mutation ResetData {
+  resetData
 }

@@ -14,6 +14,7 @@ import React, { useContext, useEffect, useState } from 'react';
 
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { PageContext } from '../../../components/Page';
+import Rating from '../../../components/Rating';
 import { styled } from '@mui/system';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router';
@@ -57,6 +58,19 @@ const ShowSmoothie: React.FC<ShowSmoothieProps> = () => {
                 <ArrowBackIosIcon fontSize="small" />
                 All Smoothies
               </Button>
+            </Grid>
+          </Grid>
+
+          <Grid container>
+            <Grid item md={4} xs={6}>
+              <Box sx={{ paddingTop: '1rem' }}>
+                <Rating
+                  smoothieId={id}
+                  updateRating
+                  value={smoothie.rating?.value}
+                  count={smoothie.rating?.count || 0}
+                />
+              </Box>
             </Grid>
           </Grid>
 

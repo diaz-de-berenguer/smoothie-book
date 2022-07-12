@@ -1,10 +1,12 @@
+import { addRating, insertSmoothie } from '../data/smoothie';
+
 import { MutationResolvers } from '../graphql-types';
-import { clearData } from '../data';
-import { insertSmoothie } from '../data/smoothie';
+import { resetData } from '../data';
 
 const Mutation: MutationResolvers = {
   createSmoothie: (_, { input }) => insertSmoothie(input),
-  clearData: () => clearData(),
+  addRating: (_, { smoothieId, value }) => addRating(smoothieId, value),
+  resetData: () => resetData(),
 };
 
 export default Mutation;

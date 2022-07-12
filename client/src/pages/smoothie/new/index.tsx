@@ -1,10 +1,4 @@
-import {
-  Box,
-  Button,
-  Grid,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Box, Button, Grid, TextField, Typography } from '@mui/material';
 import {
   GetSmoothiesDocument,
   NewSmoothie as NewSmoothieInput,
@@ -101,7 +95,6 @@ const NewSmoothie: React.FC<NewSmoothieProps> = () => {
   }
 
   useEffect(() => {
-    console.log('hasEmptyIngredientField', hasEmptyIngredientField());
     if (!hasEmptyIngredientField()) {
       addEmptyIngredient();
     }
@@ -148,7 +141,6 @@ const NewSmoothie: React.FC<NewSmoothieProps> = () => {
             <Typography variant="h5">Ingredient List</Typography>
           </FormInput>
           {ingredients.map((ingredient, i) => {
-            console.log('ing in map', ingredient);
             return (
               ingredient && (
                 <Grid container key={i}>
